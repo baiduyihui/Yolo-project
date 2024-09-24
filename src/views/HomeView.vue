@@ -1,4 +1,5 @@
-<template>
+
+ <template>
     <a-layout style="height: 100%;">
         <a-layout-header class="header">
             <div class="title">Yolo算法盒子</div>
@@ -48,14 +49,14 @@
 </template>
 <script>
 // import SvgIcon2 from '../../../components/icons/email.svg'
-import { UserOutlined, LaptopOutlined} from '@ant-design/icons-vue';
+// import { UserOutlined, LaptopOutlined} from '@ant-design/icons-vue';
 import { defineComponent, ref } from 'vue';
 import { useRouter } from 'vue-router';
 export default defineComponent({
-    components: {
-        UserOutlined,
-        LaptopOutlined
-    },
+    // components: {
+    //     UserOutlined,
+    //     LaptopOutlined
+    // },
     setup() {
         const router = useRouter()
         return {
@@ -97,4 +98,4 @@ export default defineComponent({
     color: green;
     font-size: 30px
 }
-</style>
+</style> 
