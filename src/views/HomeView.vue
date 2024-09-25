@@ -1,11 +1,12 @@
-
- <template>
+<template>
     <a-layout style="height: 100%;">
         <a-layout-header class="header">
             <div class="title">Yolo算法盒子</div>
             <div class="user">
-                <svg-icon2 src="../../../components/icons/email.svg" width="20" height="20" class="svg-icon" />
-                admin
+                <el-icon :size="25" color="#fff">
+                    <SwitchButton />
+                </el-icon>
+                <span>admin</span>
             </div>
         </a-layout-header>
         <a-layout>
@@ -47,16 +48,16 @@
         </a-layout>
     </a-layout>
 </template>
+
 <script>
-// import SvgIcon2 from '../../../components/icons/email.svg'
-// import { UserOutlined, LaptopOutlined} from '@ant-design/icons-vue';
+import { UserOutlined, LaptopOutlined} from '@ant-design/icons-vue';
 import { defineComponent, ref } from 'vue';
 import { useRouter } from 'vue-router';
 export default defineComponent({
-    // components: {
-    //     UserOutlined,
-    //     LaptopOutlined
-    // },
+    components: {
+        UserOutlined,
+        LaptopOutlined
+    },
     setup() {
         const router = useRouter()
         return {
@@ -70,6 +71,18 @@ export default defineComponent({
 });
 </script>
 <style>
+html {
+    height: 100%;
+}
+
+body {
+    height: 100%;
+    margin: 0;
+}
+
+#app {
+    height: 100%;
+}
 #components-layout-demo-top-side-2 .logo {
     float: left;
     width: 120px;
@@ -95,7 +108,23 @@ export default defineComponent({
     font-size: 23px;
 }
 .user{
+    width: 110px;
+    display: flex;
     color: green;
-    font-size: 30px
+    font-size: 30px;
+    line-height: 64px;
+}
+
+.user svg{
+    margin-top: 45px;
+}
+
+.user svg:hover {
+   color: #337ecc;
+   cursor: pointer;
+}
+
+.user span{
+    margin-left: 15px;
 }
 </style> 
