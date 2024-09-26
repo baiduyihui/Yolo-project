@@ -93,10 +93,6 @@
           >
           </el-pagination>
         
-        <EnterpriseDialog
-          ref="enterpriseDialogRef"
-          @refresh="getTableData()"
-        />
       </div>
     </dv-border-box-1>
   </template>
@@ -110,7 +106,6 @@
   import { Search, Delete,Upload } from "@element-plus/icons-vue";
   
   // 定义变量内容
-  const enterpriseDialogRef = ref();
   const enterpriseSearchRef = ref();
   const state = reactive({
     tableData: {
@@ -195,6 +190,12 @@
     text: "人数统计",
     time: "2024-06-21 12:00:00",
   },
+  {
+    view: "",
+    text: "人数统计",
+    time: "2024-06-21 12:00:00",
+  },
+  
 ];
   </script>
   
