@@ -7,6 +7,7 @@ import ElementPlus from 'element-plus'
 import 'element-plus/dist/index.css'
 // import * as ElementPlusIconsVue from '@element-plus/icons-vue'
 import router from './router/index'
+<<<<<<< HEAD
 // =======
 import 'ant-design-vue/dist/reset.css';
 // import ElementPlus from 'element-plus'
@@ -16,6 +17,9 @@ import { Tag } from 'ant-design-vue';
 import * as ElementPlusIconsVue from '@element-plus/icons-vue'
 import store from './store/store'
 // >>>>>>> Stashed changes
+=======
+
+>>>>>>> 70ed5110e01baf7f70d0ea7fa26ba1f7cb56c41c
 const app = createApp(App);
 for (const [key, component] of Object.entries(ElementPlusIconsVue)) {
     app.component(key, component)

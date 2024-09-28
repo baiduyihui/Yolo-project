@@ -16,12 +16,20 @@
   </el-card>
 </template>
 <script setup>
+<<<<<<< HEAD
 import { useRouter } from 'vue-router';
 // import { useStore } from 'vuex';
 const router = useRouter();
 // const store = useStore();
 import { ref, reactive } from 'vue'
 import { getLoginAPI } from '@/api/login';
+=======
+// import { useRouter } from 'vue-router';
+// const router = useRouter();
+// router.push('/');
+import {ref,reactive} from 'vue'
+// import {getLoginAPI} from '@/api/login';
+>>>>>>> 70ed5110e01baf7f70d0ea7fa26ba1f7cb56c41c
 
 const ruleForm = ref({
   username: '',
@@ -31,6 +39,7 @@ const rules = reactive({
   username: [{ required: true, message: '请输入用户名', trigger: 'blur' }],
   password: [{ required: true, message: '请输入密码', trigger: 'blur' }],
 })
+<<<<<<< HEAD
 
 const login = async () => {
 
@@ -46,6 +55,10 @@ const login = async () => {
     alert(res.msg)
   }
 
+=======
+const login =  async()=>{
+  
+>>>>>>> 70ed5110e01baf7f70d0ea7fa26ba1f7cb56c41c
 }
 
 </script>

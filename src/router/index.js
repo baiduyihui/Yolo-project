@@ -5,12 +5,14 @@ const router = createRouter({
   routes: [
     {
       path:'/',
-      redirect:'/login'
+      redirect:'/login',
+      meta: { requiresAuth: false }
     },
     {
         path:'/login',
         name:'login',
         component:()=>import('../views/LoginView'),
+        meta: { requiresAuth: false }
     },
     {
         path:'/home',
@@ -31,6 +33,7 @@ const router = createRouter({
             {
               path: 'channel',
               name: 'channel',
+<<<<<<< HEAD
               component: () => import('../views/ChannelView.vue'),
               // meta: { requiresAuth: true } // 需要登录
             }]
@@ -53,4 +56,23 @@ router.beforeEach((to, from, next) => {
     next();
   }
 })
+=======
+              component: () => import('../views/ChannelView.vue')
+            }],
+        meta: { requiresAuth: true }
+    },
+  ]
+})
+
+// //路由守卫
+// router.beforeEach((to, from, next) => {
+//   const isLoggedIn = localStorage.getItem('session_id') !== null
+//   if (to.meta.requiresAuth && !isLoggedIn) {
+//     next('/login');
+//   } else {
+//     next();
+//   }
+// })
+
+>>>>>>> 70ed5110e01baf7f70d0ea7fa26ba1f7cb56c41c
 export default router
