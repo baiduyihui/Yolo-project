@@ -1,6 +1,7 @@
 <template>
   <!-- <router-link to="/home/realtime">登陆</router-link> -->
   <el-card style="max-width: 480px" class="login-card">
+    <h2  style="margin-bottom: 20px;">Yolo算法盒子</h2>
     <el-form ref="ruleFormRef" :model="ruleForm" :rules="rules" class="login-form">
       <el-form-item label="账号" prop="username">
         <el-input v-model="ruleForm.username" clearable placeholder="请输入账号" />
@@ -16,11 +17,20 @@
   </el-card>
 </template>
 <script setup>
+<<<<<<< Updated upstream
 // import { useRouter } from 'vue-router';
 // const router = useRouter();
 // router.push('/');
 import {ref,reactive} from 'vue'
 // import {getLoginAPI} from '@/api/login';
+=======
+import { useRouter } from 'vue-router';
+// import { useStore } from 'vuex';
+const router = useRouter();
+// const store = useStore();
+import { ref, reactive } from 'vue'
+import { getLoginAPI } from '@/api/login';
+>>>>>>> Stashed changes
 
 const ruleForm = ref({
   username: '',
@@ -30,15 +40,33 @@ const rules = reactive({
   username: [{ required: true, message: '请输入用户名', trigger: 'blur' }],
   password: [{ required: true, message: '请输入密码', trigger: 'blur' }],
 })
+<<<<<<< Updated upstream
 const login =  async()=>{
   
+=======
+
+const login = async () => {
+
+  const res = await getLoginAPI(ruleForm.value.username, ruleForm.value.password)
+  console.log('登陆返回数据:', res);
+  if (res.code == 200) {
+    // localStorage.setItem('session_id', res.session_id);
+    // const session_id=localStorage.getItem('session_id');
+    // console.log('存储后的session_id:', session_id); 
+    // store.dispatch('login', res.session_id);
+    router.push('/home/realtime')
+  } else {
+    alert(res.msg)
+  }
+
+>>>>>>> Stashed changes
 }
 
 </script>
 <style scoped>
 .login-card {
   max-width: 400px;
-  margin: 250px auto;
+  margin: 350px auto;
   padding: 20px;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.8);
   background-color: rgba(255, 255, 255, 0.8)

@@ -1,13 +1,13 @@
 import {http} from '@/utils/http'
 
 export const getChannelListAPI=()=>{
-    return http.get('/api/channel_info')
+    return http.get('/channel_info')
 }
 
 export const setChannelListAPI=(data)=>{
-    return http.patch('/api/channel_info/',data)
+    return http.patch('/channel_info/',data)
 }
 
 export const reopenChannelListAPI=(data)=>{
-    return http.patch('/api/reopen/',data)
+    return http.patch('/reopen/',data)
 }
