@@ -13,7 +13,6 @@
                 <el-select
                   v-model="state.tableData.param.channel"
                   placeholder="请选择通道"
-                  clearable
                   style="width: 180px"
                 >
                   <el-option label="通道一" value="1" />
@@ -33,25 +32,24 @@
               </el-form-item>
               <el-form-item label="" prop="start_time">
                 
-                <el-date-picker
+        
+      <el-date-picker
         v-model="state.tableData.param.start_time"
         type="datetime"
         placeholder="请选择开始时间"
-        format="YYYY/MM/DD HH:mm:ss"
         value-format="YYYY-MM-DD hh:mm:ss"
+
       />
               </el-form-item>
               <el-form-item label="" prop="end_time" style="width: 150px;">
-                
+      
       <el-date-picker
         v-model="state.tableData.param.end_time"
         type="datetime"
         placeholder="请选择结束时间"
-        format="YYYY/MM/DD HH:mm:ss"
         value-format="YYYY-MM-DD hh:mm:ss"
 
       />
-    
                 </el-form-item>
                 <el-button size="default" type="primary" @click="getTable">
                   <el-icon ><Search /></el-icon>查询记录
@@ -59,7 +57,7 @@
                 <el-button size="default" type="danger" @click="deleteState">
                   <el-icon><Delete /></el-icon>删除记录
                 </el-button>
-                <el-button size="default" @click="downLoad">
+                <el-button size="default" @click="downloadFile">
                   <el-icon><Upload/></el-icon>导出记录
                 </el-button>
               </el-row>
@@ -68,10 +66,10 @@
           <div class="box">
             <div class="carousel">
               <div class="carousel-images">
-                <template v-for="item in state.tableData.records" :key="item">
+                <template v-for="item in currentPageData" :key="item">
                   <div class="content">
                     <div class="view">
-                      <img :src="item.photos" alt="" style="width: 237px;height: 110px;"/>
+                      <img :src="item.url" alt="" style="width: 237px;height: 110px;"/>
                     </div>
                     <div class="text">
                       <div class="font1">{{ item.type}}</div>
@@ -87,8 +85,8 @@
             @current-change="onHandleCurrentChange"
             :pager-count="5"
             :page-sizes="[7,6,5]"
-            v-model:current-page="state.tableData.param.page"
-            v-model:page-size="state.tableData.param.page"
+            v-model:current-page="state.tableData.current"
+            v-model:page-size="state.tableData.size"
             layout="total,  prev, pager, next, jumper"
             :total="state.tableData.length"
             style="background-color: transparent;margin-left: 450px;"
@@ -99,10 +97,10 @@
   </template>
   
 <script setup  name="enterpriseInfo">
-import {reactive} from "vue";
+import {reactive,computed} from "vue";
 import { Search, Delete,Upload } from "@element-plus/icons-vue";
 import {searchAlarmApi} from '../api/search'
-import { ElMessage  } from "element-plus";
+import { ElMessage,ElMessageBox  } from "element-plus";
 
   const searchAlarm=searchAlarmApi()
   // 定义变量内容
@@ -111,6 +109,8 @@ import { ElMessage  } from "element-plus";
       records: [],
       length: 0,
       loading: false,
+      current:1,
+      size:10,
       param: {
         page: 1,
         channel: "1",
@@ -142,41 +142,70 @@ const getTableData = async () => {
 getTableData();
 const getTable=()=> {
   console.log(state.tableData.param);
-  // if (state.tableData.param.channel=='通道一'){
-  //   state.tableData.param.channel=1
-  //   console.log(1111)
-  // }else{
-  //   state.tableData.param.channel=2
-
-  // }
   getTableData()
 }
-// 删除数据
-const deleteState=async()=> {
-  // ElMessageBox.confirm("此操作将永久删除数据，是否继续?", "提示", {
-  //   confirmButtonText: "确认",
-  //   cancelButtonText: "取消",
-  //   type: "warning",
-  // })
-  try{
-    const response=await searchAlarm.deleteState(state.tableData.param);
-    console.log(response);
-    ElMessage.success("删除成功！")
-    getTableData()
-  }catch(error) {
-    console.log(error)
-  }
-}
-//导入数据
-const downLoad=async()=> {
-  try{
-    const response=await searchAlarm.downLoadState(state.tableData.param);
-    console.log(response);
 
-  } catch(error) {
-    console.log(error)
+const getCurrentPageData = () => {
+  const current = state.tableData.current;
+  const size=state.tableData.size;
+  const startIndex = (current - 1) * size;
+  const endIndex = current * size;
+  return state.tableData.records.slice(startIndex, endIndex);
+};
+const currentPageData = computed(() => getCurrentPageData());
+
+// 删除数据
+const deleteState = async () => {
+  try {
+    // 等待用户响应确认对话框
+    const confirm = await ElMessageBox.confirm("此操作将永久删除数据，是否继续?", "提示", {
+      confirmButtonText: "确认",
+      cancelButtonText: "取消",
+      type: "warning",
+    });
+
+    // 检查用户是否点击了确认
+    if (confirm) {
+      // 用户点击了确认，执行删除操作
+      const response = await searchAlarm.deleteState(state.tableData.param);
+      console.log(response);
+      ElMessage.success("删除成功！");
+      getTableData();
+    } else {
+      // 用户点击了取消
+      ElMessage.info("删除操作已取消");
+    }
+  } catch (error) {
+    // 处理错误情况
+    console.error("删除失败:", error);
+    ElMessage.error("删除失败: " + error.message);
   }
-}
+};
+
+//导入数据
+const downloadFile = async () => {
+  try {
+    const response = await searchAlarm.downLoadState(state.tableData.param);
+    // 创建一个 URL 对象
+    console.log(response)
+    const url = window.URL.createObjectURL(new Blob([response.download_path]));
+    console.log(response.
+    download_path)
+    // 创建一个链接元素
+    const link = document.createElement('a');
+    link.href = url;
+    link.setAttribute('download', '文件名'); // 设置下载的文件名
+    // 触发下载
+    document.body.appendChild(link);
+    link.click();
+    // 清理
+    link.parentNode.removeChild(link);
+    window.URL.revokeObjectURL(url);
+  } catch (error) {
+    console.error('下载文件失败:', error);
+  }
+};
+
   // 分页改变
   const onHandleSizeChange = (val) => {
     state.tableData.param.page = val;
@@ -254,6 +283,7 @@ const downLoad=async()=> {
 .content {
   width: 299px;
   text-align: center;
+  margin-bottom: 20px;
 }
 
 .box {
@@ -262,6 +292,7 @@ const downLoad=async()=> {
 }
 .carousel {
   overflow: hidden;
+  margin-bottom: 20px;
 }
 
 .carousel-images {

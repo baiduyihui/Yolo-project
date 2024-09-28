@@ -50,14 +50,9 @@
 
 <script setup>
 import { TeamOutlined, CarOutlined } from '@ant-design/icons-vue'
-<<<<<<< Updated upstream
-import { ref, onMounted, defineEmits, defineProps } from 'vue'
-const ifall = ref(true)
-=======
 import { ref, onMounted } from 'vue'
 import { defineProps, defineEmits } from 'vue'
 const ifall = ref(false)
->>>>>>> Stashed changes
 const tableData = ref([])
 const props = defineProps({
     tableData2: {
