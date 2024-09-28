@@ -66,7 +66,7 @@
           <div class="box">
             <div class="carousel">
               <div class="carousel-images">
-                <template v-for="item in currentPageData" :key="item">
+                <template v-for="item in state.tableData.records" :key="item">
                   <div class="content">
                     <div class="view">
                       <img :src="item.url" alt="" style="width: 237px;height: 110px;"/>
@@ -85,8 +85,8 @@
             @current-change="onHandleCurrentChange"
             :pager-count="5"
             :page-sizes="[7,6,5]"
-            v-model:current-page="state.tableData.current"
-            v-model:page-size="state.tableData.size"
+             v-model:current-page="state.tableData.param.page.current"
+          v-model:page-size="state.tableData.param.page.size"
             layout="total,  prev, pager, next, jumper"
             :total="state.tableData.length"
             style="background-color: transparent;margin-left: 450px;"
@@ -112,7 +112,10 @@ import { ElMessage,ElMessageBox  } from "element-plus";
       current:1,
       size:10,
       param: {
-        page: 1,
+        page: {
+        current: 1,
+        size: 10,
+      },
         channel: "1",
         alarm_type: "",
         start_time: "",
@@ -145,14 +148,6 @@ const getTable=()=> {
   getTableData()
 }
 
-const getCurrentPageData = () => {
-  const current = state.tableData.current;
-  const size=state.tableData.size;
-  const startIndex = (current - 1) * size;
-  const endIndex = current * size;
-  return state.tableData.records.slice(startIndex, endIndex);
-};
-const currentPageData = computed(() => getCurrentPageData());
 
 // 删除数据
 const deleteState = async () => {
