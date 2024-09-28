@@ -1,6 +1,10 @@
 import axios from 'axios'
 export const http=axios.create({
-    baseURL:'http://ify543.natappfree.cc'
+// <<<<<<< Updated upstream
+    // baseURL:'http://ify543.natappfree.cc'
+// =======
+    baseURL:'http://ipbdtest0001.natapp1.cc/api'
+// >>>>>>> Stashed changes
 })
 http.interceptors.request.use((config)=>{
     return config;
