@@ -16,7 +16,8 @@ import { Tag } from 'ant-design-vue';
 import * as ElementPlusIconsVue from '@element-plus/icons-vue'
 // >>>>>>> Stashed changes
 import { createPinia } from 'pinia';
-
+// =======
+// >>>>>>> Stashed changes
 const app = createApp(App);
 for (const [key, component] of Object.entries(ElementPlusIconsVue)) {
     app.component(key, component)
