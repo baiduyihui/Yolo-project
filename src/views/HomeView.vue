@@ -50,6 +50,10 @@
 </template>
 
 <script>
+// <<<<<<< Updated upstream
+// =======
+// import SvgIcon2 from '../../../components/icons/email.svg'
+// >>>>>>> Stashed changes
 import { UserOutlined, LaptopOutlined} from '@ant-design/icons-vue';
 import { defineComponent, ref } from 'vue';
 import { useRouter } from 'vue-router';
