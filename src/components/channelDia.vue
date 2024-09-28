@@ -50,8 +50,8 @@
 
 <script setup>
 import { TeamOutlined, CarOutlined } from '@ant-design/icons-vue'
-import { ref, onMounted } from 'vue'
-const ifall = ref(false)
+import { ref, onMounted, defineEmits, defineProps } from 'vue'
+const ifall = ref(true)
 const tableData = ref([])
 const props = defineProps({
     tableData2: {

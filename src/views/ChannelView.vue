@@ -1,7 +1,7 @@
 <template>
     <el-table ref="multipleTableRef" :data="tableData" style="width: 100%" @selection-change="handleSelectionChange">
         <el-table-column type="selection" :selectable="selectable" width="55" />
-        <el-table-column label="序号" width="120" align="center">
+        <el-table-column label="序号" width="100" align="center">
             <template #default="scope">{{ scope.row.pk }}</template>
         </el-table-column>
         <el-table-column prop="channel_status" label="通道状态" width="100" align="center">
@@ -20,15 +20,15 @@
                 <el-input v-model="scope.row.channel_name" style="width: 240px" placeholder="Please input" />
             </template>
         </el-table-column>
-        <el-table-column label="算法配置" width="150" align="center">
+        <el-table-column label="算法配置" width="120" align="center">
             <template #default="scope">
                 <el-icon :size="25" @click="setting(scope.row,scope.$index)" color="#409EFF">
                     <Setting />
                 </el-icon>
             </template>
         </el-table-column>
-        <el-table-column property="week" label="周界" width="150" align="center" />
-        <el-table-column property="change_time" label="修改时间" width="200" align="center" :show-overflow-tooltip="true" />
+        <el-table-column property="week" label="周界" width="120" align="center" />
+        <el-table-column property="change_time" label="修改时间"  align="center" :show-overflow-tooltip="true" />
     </el-table>
     <el-button class="btn" type="primary" :disabled="tableData.length===0" @click="reopenChannelList">重启通道</el-button>
     <el-button class="btn" :disabled="tableData.length === 0" @click="changechannel">重置配置</el-button>
@@ -117,7 +117,6 @@ const changechannel = () =>{
                 "car_sensitive": item.car_sensitive,
                 "car_frequency": item.car_frequency,
             })
-            getChannelList()
             ElMessage({
                 showClose: true,
                 message: '通道配置成功',
@@ -132,6 +131,7 @@ const changechannel = () =>{
             })
         }
     })
+    getChannelList()
 }
 
 //重启通道
