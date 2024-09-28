@@ -17,11 +17,20 @@
   </el-card>
 </template>
 <script setup>
+<<<<<<< Updated upstream
 // import { useRouter } from 'vue-router';
 // const router = useRouter();
 // router.push('/');
 import {ref,reactive} from 'vue'
 // import {getLoginAPI} from '@/api/login';
+=======
+import { useRouter } from 'vue-router';
+// import { useStore } from 'vuex';
+const router = useRouter();
+// const store = useStore();
+import { ref, reactive } from 'vue'
+import { getLoginAPI } from '@/api/login';
+>>>>>>> Stashed changes
 
 const ruleForm = ref({
   username: '',

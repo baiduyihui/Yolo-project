@@ -14,7 +14,6 @@ import 'element-plus/dist/index.css'
 import { Table } from 'ant-design-vue';
 import { Tag } from 'ant-design-vue';
 import * as ElementPlusIconsVue from '@element-plus/icons-vue'
-import store from './store/store'
 // >>>>>>> Stashed changes
 import { createPinia } from 'pinia';
 
@@ -34,7 +33,7 @@ app.use(ElementPlus)
 // =======
 app.use(Table)
 app.use(Tag)
-app.use(store)
+
 const store = createPinia()
 app.use(store)
 
