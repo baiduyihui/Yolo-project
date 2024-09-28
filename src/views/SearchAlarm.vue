@@ -97,7 +97,7 @@
   </template>
   
 <script setup  name="enterpriseInfo">
-import {reactive,computed} from "vue";
+import {reactive} from "vue";
 import { Search, Delete,Upload } from "@element-plus/icons-vue";
 import {searchAlarmApi} from '../api/search'
 import { ElMessage,ElMessageBox  } from "element-plus";
