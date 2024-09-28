@@ -6,6 +6,7 @@ import ElementPlus from 'element-plus'
 import 'element-plus/dist/index.css'
 import * as ElementPlusIconsVue from '@element-plus/icons-vue'
 import router from './router/index'
+
 const app = createApp(App);
 app.config.productionTip = false;
 app.use(router)

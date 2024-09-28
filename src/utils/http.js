@@ -1,10 +1,12 @@
 import axios from 'axios'
 export const http=axios.create({
-    baseURL:'http://ify543.natappfree.cc'
+    baseURL:'http://ipbdtest0001.natapp1.cc'
 })
 http.interceptors.request.use((config)=>{
+    if (localStorage.getItem('session_id')) {
+      config.headers["Authorization"] =localStorage.getItem('session_id')
+    }
     return config;
-
 },
 (error)=>{
     return Promise.reject(error);}

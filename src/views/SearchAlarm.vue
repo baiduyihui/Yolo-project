@@ -1,202 +1,191 @@
 <template>
-    <ReturnIndex />
-    <dv-border-box-1>
-      <div class="box1 layout-padding" >
-          <div>
-            <el-form
-              :inline="true"
-              ref="SearchRef"
-              :model="state.tableData.param.query"
-              size="default"
-            >
-              <el-row>
-                <el-form-item label="" size="default" prop="channel">
+  <dv-border-box-1>
+    <div class="box1" >
+      <div>
+        <el-form
+          :inline="true"
+          ref="SearchRef"
+          :model="state.tableData.param"
+          size="default"
+          >
+            <el-row>
+              <el-form-item label="" size="default" prop="channel">
                 <el-select
-                  v-model="state.tableData.param.query.channel"
+                  v-model="state.tableData.param.channel"
                   placeholder="请选择通道"
                   clearable
                   style="width: 180px"
                 >
-                  <el-option label="通道一" value="通道一" />
-                  <el-option label="通道二" value="通道二" />
+                  <el-option label="通道一" value="1" />
+                  <el-option label="通道二" value="2" />
                 </el-select>
               </el-form-item>
-              <el-form-item label="" size="default" prop="alert">
+              <el-form-item label="" size="default" prop="alarm_type">
                 <el-select
                   style="width: 180px"
-                  v-model="state.tableData.param.query.alert"
+                  v-model="state.tableData.param.alarm_type"
                   placeholder="请选择告警类型"
                   clearable
                 >
-                  <el-option label="人数统计" value="人数统计" />
-                  <el-option label="车辆统计" value="车辆统计" />
+                  <el-option label="人数统计" value="people" />
+                  <el-option label="车辆统计" value="car" />
                 </el-select>
               </el-form-item>
-             
-                <el-form-item label="" prop="startTime">
+              <el-form-item label="" prop="start_time">
+                
                 <el-date-picker
-                v-model="state.tableData.param.query.startTime"
-                    type="datetime"
-                    placeholder="请选择开始时间"
-                />
+        v-model="state.tableData.param.start_time"
+        type="datetime"
+        placeholder="请选择开始时间"
+        format="YYYY/MM/DD HH:mm:ss"
+        value-format="YYYY-MM-DD hh:mm:ss"
+      />
+              </el-form-item>
+              <el-form-item label="" prop="end_time" style="width: 150px;">
+                
+      <el-date-picker
+        v-model="state.tableData.param.end_time"
+        type="datetime"
+        placeholder="请选择结束时间"
+        format="YYYY/MM/DD HH:mm:ss"
+        value-format="YYYY-MM-DD hh:mm:ss"
+
+      />
+    
                 </el-form-item>
-                <el-form-item label="" prop="finishTime" style="width: 150px;">
-                <el-date-picker
-                v-model="state.tableData.param.query.finishTime"
-                    type="datetime"
-                    placeholder="请选择结束时间"
-                />
-                </el-form-item>
-                <el-button
-                  size="default"
-                  type="primary"
-                  @click="updateQuery"
-                >
-                  <el-icon><Search /></el-icon>查询记录
+                <el-button size="default" type="primary" @click="getTable">
+                  <el-icon ><Search /></el-icon>查询记录
                 </el-button>
-                <el-button size="default" type="danger" @click="resetQuery">
+                <el-button size="default" type="danger" @click="deleteState">
                   <el-icon><Delete /></el-icon>删除记录
                 </el-button>
-                <el-button size="default" >
+                <el-button size="default" @click="downLoad">
                   <el-icon><Upload/></el-icon>导出记录
                 </el-button>
               </el-row>
             </el-form>
           </div>
           <div class="box">
-        <div class="carousel">
-    <div class="carousel-images">
-      <template v-for="item in data" :key="item">
-        <div class="content">
-          <div class="view">
-            <img :src="item.img" alt="" style="width: 237px;height: 110px;"/></div>
-          <div class="text">
-            <div class="font1">{{ item.text }}</div>
-            <div class="font2">{{ (item.time) }}</div>
+            <div class="carousel">
+              <div class="carousel-images">
+                <template v-for="item in state.tableData.records" :key="item">
+                  <div class="content">
+                    <div class="view">
+                      <img :src="item.photos" alt="" style="width: 237px;height: 110px;"/>
+                    </div>
+                    <div class="text">
+                      <div class="font1">{{ item.type}}</div>
+                      <div class="font2">{{ (item.time) }}</div>
+                    </div>
+                  </div>
+                </template>
+              </div>
+            </div>
           </div>
-        </div>
-      </template>
-    </div>
-   
-  </div>
-      </div>
           <el-pagination
             @size-change="onHandleSizeChange"
             @current-change="onHandleCurrentChange"
             :pager-count="5"
             :page-sizes="[7,6,5]"
-            v-model:current-page="state.tableData.param.page.current"
-            v-model:page-size="state.tableData.param.page.size"
+            v-model:current-page="state.tableData.param.page"
+            v-model:page-size="state.tableData.param.page"
             layout="total,  prev, pager, next, jumper"
-            :total="state.tableData.total"
+            :total="state.tableData.length"
             style="background-color: transparent;margin-left: 450px;"
           >
           </el-pagination>
-        
       </div>
     </dv-border-box-1>
   </template>
   
-  <script setup  name="enterpriseInfo">
-  import {
-    reactive,
-    ref,
-    nextTick,
-  } from "vue";
-  import { Search, Delete,Upload } from "@element-plus/icons-vue";
-  
+<script setup  name="enterpriseInfo">
+import {reactive} from "vue";
+import { Search, Delete,Upload } from "@element-plus/icons-vue";
+import {searchAlarmApi} from '../api/search'
+import { ElMessage  } from "element-plus";
+
+  const searchAlarm=searchAlarmApi()
   // 定义变量内容
-  const enterpriseSearchRef = ref();
   const state = reactive({
     tableData: {
       records: [],
-      total: 0,
+      length: 0,
       loading: false,
       param: {
-        page: {
-          current: 1,
-          size: 7,
-        },
-        query: {
-          channel: "",
-          alert: "",
-          startTime: "",
-          finishTime:"",
-        },
+        page: 1,
+        channel: "1",
+        alarm_type: "",
+        start_time: "",
+        end_time:"",
       },
+      query :{
+        channel: "",
+        alarm_type: "",
+        start_time: "",
+        end_time:"",
+      }
     },
   });
   
+//获取数据
+const getTableData = async () => {
+  try {
+    const response = await searchAlarm.getState(state.tableData.param);
+    console.log(response);
+    state.tableData.records = response.photos; 
+    state.tableData.length = response.photos.length; 
+  } catch (error) {
+    console.error('Error in searchAlarm.getState:', error);
+  }
+};
+//调用
+getTableData();
+const getTable=()=> {
+  console.log(state.tableData.param);
+  // if (state.tableData.param.channel=='通道一'){
+  //   state.tableData.param.channel=1
+  //   console.log(1111)
+  // }else{
+  //   state.tableData.param.channel=2
 
-  const updateQuery = () => {
-    console.log('查询条件:', state.tableData.records);// 调用获取数据的方法
-  };
- 
+  // }
+  getTableData()
+}
+// 删除数据
+const deleteState=async()=> {
+  // ElMessageBox.confirm("此操作将永久删除数据，是否继续?", "提示", {
+  //   confirmButtonText: "确认",
+  //   cancelButtonText: "取消",
+  //   type: "warning",
+  // })
+  try{
+    const response=await searchAlarm.deleteState(state.tableData.param);
+    console.log(response);
+    ElMessage.success("删除成功！")
+    getTableData()
+  }catch(error) {
+    console.log(error)
+  }
+}
+//导入数据
+const downLoad=async()=> {
+  try{
+    const response=await searchAlarm.downLoadState(state.tableData.param);
+    console.log(response);
 
-  // 重置搜索框
-  const resetQuery = () => {
-    nextTick(() => {
-      enterpriseSearchRef.value.resetFields(); // 重置表单
-      // 重置查询条件
-    });
-  };
-  
+  } catch(error) {
+    console.log(error)
+  }
+}
   // 分页改变
   const onHandleSizeChange = (val) => {
-    state.tableData.param.page.size = val;
+    state.tableData.param.page = val;
   };
   // 分页改变
   const onHandleCurrentChange = (val) => {
-    state.tableData.param.page.current = val;
+    state.tableData.param.page = val;
   };
-  let data = [
-  {
-    view: "",
-    text: "人数统计",
-    time: "2024-06-21 12:00:00",
-  },
-  {
-    view: "",
-    text: "人数统计",
-    time: "2024-06-21 12:00:00",
-  },
-  {
-    view: "",
-    text: "人数统计",
-    time: "2024-06-21 12:00:00",
-  },
-  {
-    view: "",
-    text: "人数统计",
-    time: "2024-06-21 12:00:00",
-  },
-  {
-    view: "",
-    text: "人数统计",
-    time: "2024-06-21 12:00:00",
-  },
-  {
-    view: "",
-    text: "人数统计",
-    time: "2024-06-21 12:00:00",
-  },
-  {
-    view: "",
-    text: "人数统计",
-    time: "2024-06-21 12:00:00",
-  },
-  {
-    view: "",
-    text: "人数统计",
-    time: "2024-06-21 12:00:00",
-  },
-  {
-    view: "",
-    text: "人数统计",
-    time: "2024-06-21 12:00:00",
-  },
-  
-];
+
   </script>
   
   <style scoped >
@@ -271,7 +260,7 @@
   display: flex;
   flex-wrap: nowrap;
 }
-  .carousel {
+.carousel {
   overflow: hidden;
 }
 

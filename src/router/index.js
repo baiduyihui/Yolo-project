@@ -5,12 +5,14 @@ const router = createRouter({
   routes: [
     {
       path:'/',
-      redirect:'/login'
+      redirect:'/login',
+      meta: { requiresAuth: false }
     },
     {
         path:'/login',
         name:'login',
         component:()=>import('../views/LoginView'),
+        meta: { requiresAuth: false }
     },
     {
         path:'/home',
@@ -30,9 +32,20 @@ const router = createRouter({
               path: 'channel',
               name: 'channel',
               component: () => import('../views/ChannelView.vue')
-            }]
+            }],
+        meta: { requiresAuth: true }
     },
   ]
 })
- 
+
+// //路由守卫
+// router.beforeEach((to, from, next) => {
+//   const isLoggedIn = localStorage.getItem('session_id') !== null
+//   if (to.meta.requiresAuth && !isLoggedIn) {
+//     next('/login');
+//   } else {
+//     next();
+//   }
+// })
+
 export default router

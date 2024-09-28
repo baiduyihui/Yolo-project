@@ -3,7 +3,7 @@
         <a-layout-header class="header">
             <div class="title">Yolo算法盒子</div>
             <div class="user">
-                <el-icon :size="25" color="#fff">
+                <el-icon :size="25" color="#fff" @click="logout">
                     <SwitchButton />
                 </el-icon>
                 <span>admin</span>
@@ -53,6 +53,7 @@
 import { UserOutlined, LaptopOutlined} from '@ant-design/icons-vue';
 import { defineComponent, ref } from 'vue';
 import { useRouter } from 'vue-router';
+import { getLooutAPI } from '../api/user'
 export default defineComponent({
     components: {
         UserOutlined,
@@ -60,12 +61,22 @@ export default defineComponent({
     },
     setup() {
         const router = useRouter()
+        const logout = async () => {
+            try {
+                await getLooutAPI()
+                router.push('/login')
+
+            } catch (error) {
+                console.log(error)
+            }
+        }
         return {
             selectedKeys1: ref(['2']),
             selectedKeys2: ref(['1']),
             collapsed: ref(false),
             openKeys: ref(['sub1']),
-            router
+            router,
+            logout
         };
     },
 });

@@ -20,7 +20,7 @@
 // const router = useRouter();
 // router.push('/');
 import {ref,reactive} from 'vue'
-// import getLoginAPI from '@/api/login';
+// import {getLoginAPI} from '@/api/login';
 
 const ruleForm=ref({
     username:'',
@@ -30,9 +30,8 @@ const rules = reactive({
     username: [{ required:true, message:'请输入用户名', trigger: 'blur' }],
     password: [{ required:true, message:'请输入密码', trigger: 'blur' }],
 })
-const login=  ()=>{
-    // const res=await getLoginAPI(ruleForm.value)
-    console.log(111)
+const login =  async()=>{
+  
 }
 
 </script>
