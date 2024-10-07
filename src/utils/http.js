@@ -3,7 +3,7 @@ export const http=axios.create({
 // <<<<<<< Updated upstream
     // baseURL:'http://ify543.natappfree.cc'
 // =======
-    baseURL:'http://ipbdtest0001.natapp1.cc/api'
+    baseURL:'http://101.132.177.19:9200/api'
 // >>>>>>> Stashed changes
 })
 http.interceptors.request.use((config)=>{

@@ -4,7 +4,6 @@
       <div>
         <el-form
           :inline="true"
-          ref="SearchRef"
           :model="state.tableData.param"
           size="default"
           >
@@ -31,41 +30,34 @@
                 </el-select>
               </el-form-item>
               <el-form-item label="" prop="start_time">
-                
-        
-      <el-date-picker
-        v-model="state.tableData.param.start_time"
-        type="datetime"
-        placeholder="请选择开始时间"
-        value-format="YYYY-MM-DD hh:mm:ss"
-
-      />
+                <el-date-picker
+                v-model="state.tableData.param.start_time"
+                type="datetime"
+                placeholder="请选择开始时间"
+                value-format="YYYY-MM-DD hh:mm:ss"/>
               </el-form-item>
               <el-form-item label="" prop="end_time" style="width: 150px;">
-      
-      <el-date-picker
-        v-model="state.tableData.param.end_time"
-        type="datetime"
-        placeholder="请选择结束时间"
-        value-format="YYYY-MM-DD hh:mm:ss"
-
-      />
-                </el-form-item>
-                <el-button size="default" type="primary" @click="getTable">
-                  <el-icon ><Search /></el-icon>查询记录
-                </el-button>
-                <el-button size="default" type="danger" @click="deleteState">
-                  <el-icon><Delete /></el-icon>删除记录
-                </el-button>
-                <el-button size="default" @click="downloadFile">
-                  <el-icon><Upload/></el-icon>导出记录
-                </el-button>
+                <el-date-picker
+                  v-model="state.tableData.param.end_time"
+                  type="datetime"
+                  placeholder="请选择结束时间"
+                  value-format="YYYY-MM-DD hh:mm:ss"/>
+              </el-form-item>
+              <el-button size="default" type="primary" @click="getTable">
+                <el-icon ><Search /></el-icon>查询记录
+              </el-button>
+              <el-button size="default" type="danger" @click="deleteState">
+                <el-icon><Delete /></el-icon>删除记录
+              </el-button>
+              <el-button size="default" @click="downloadFile">
+                <el-icon><Upload/></el-icon>导出记录
+              </el-button>
               </el-row>
             </el-form>
           </div>
           <div class="box">
-            <div class="carousel">
-              <div class="carousel-images">
+            <div >
+              <div class="images">
                 <template v-for="item in state.tableData.records" :key="item">
                   <div class="content">
                     <div class="view">
@@ -85,8 +77,8 @@
             @current-change="onHandleCurrentChange"
             :pager-count="5"
             :page-sizes="[7,6,5]"
-             v-model:current-page="state.tableData.param.page.current"
-          v-model:page-size="state.tableData.param.page.size"
+            v-model:current-page="state.tableData.param.page.current"
+            v-model:page-size="state.tableData.param.page.size"
             layout="total,  prev, pager, next, jumper"
             :total="state.tableData.length"
             style="background-color: transparent;margin-left: 450px;"
@@ -96,7 +88,7 @@
     </dv-border-box-1>
   </template>
   
-<script setup  name="enterpriseInfo">
+<script setup>
 import {reactive} from "vue";
 import { Search, Delete,Upload } from "@element-plus/icons-vue";
 import {searchAlarmApi} from '../api/search'
@@ -108,9 +100,6 @@ import { ElMessage,ElMessageBox  } from "element-plus";
     tableData: {
       records: [],
       length: 0,
-      loading: false,
-      current:1,
-      size:10,
       param: {
         page: {
         current: 1,
@@ -121,12 +110,6 @@ import { ElMessage,ElMessageBox  } from "element-plus";
         start_time: "",
         end_time:"",
       },
-      query :{
-        channel: "",
-        alarm_type: "",
-        start_time: "",
-        end_time:"",
-      }
     },
   });
   
@@ -147,31 +130,23 @@ const getTable=()=> {
   console.log(state.tableData.param);
   getTableData()
 }
-
-
 // 删除数据
 const deleteState = async () => {
   try {
-    // 等待用户响应确认对话框
     const confirm = await ElMessageBox.confirm("此操作将永久删除数据，是否继续?", "提示", {
       confirmButtonText: "确认",
       cancelButtonText: "取消",
       type: "warning",
     });
-
-    // 检查用户是否点击了确认
     if (confirm) {
-      // 用户点击了确认，执行删除操作
       const response = await searchAlarm.deleteState(state.tableData.param);
       console.log(response);
       ElMessage.success("删除成功！");
       getTableData();
     } else {
-      // 用户点击了取消
       ElMessage.info("删除操作已取消");
     }
   } catch (error) {
-    // 处理错误情况
     console.error("删除失败:", error);
     ElMessage.error("删除失败: " + error.message);
   }
@@ -203,13 +178,12 @@ const downloadFile = async () => {
 
   // 分页改变
   const onHandleSizeChange = (val) => {
-    state.tableData.param.page = val;
+    state.tableData.param.page.current = val;
   };
   // 分页改变
   const onHandleCurrentChange = (val) => {
-    state.tableData.param.page = val;
+    state.tableData.param.page.size = val;
   };
-
   </script>
   
   <style scoped >
@@ -290,7 +264,7 @@ const downloadFile = async () => {
   margin-bottom: 20px;
 }
 
-.carousel-images {
+.images {
   display: flex;
   flex-wrap: wrap;
 }
