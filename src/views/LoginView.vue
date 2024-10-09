@@ -11,7 +11,6 @@
       </el-form-item>
       <el-form-item class="button-group">
         <el-button type="primary" @click="login">登录</el-button>
-        <el-button type="info">注册</el-button>
       </el-form-item>
     </el-form>
   </el-card>
@@ -48,7 +47,10 @@ const login = async () => {
   }
 
 }
-
+const toggleScroll=()=>{
+  document.body.style.overflow=document.body.style.overflow=='hidden'?'':'hidden';
+}
+toggleScroll();
 </script>
 <style scoped>
 .login-card {
@@ -96,5 +98,6 @@ body {
   background-repeat: no-repeat;
   height: 100vh;
   margin: 0;
+  overflow:hidden;
 }
 </style>

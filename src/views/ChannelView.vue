@@ -117,6 +117,7 @@ const changechannel = () =>{
                 "car_sensitive": item.car_sensitive,
                 "car_frequency": item.car_frequency,
             })
+    getChannelList()
             ElMessage({
                 showClose: true,
                 message: '通道配置成功',
