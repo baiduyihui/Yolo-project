@@ -13,6 +13,8 @@ import 'ant-design-vue/dist/reset.css';
 import 'element-plus/dist/index.css'
 import { Table } from 'ant-design-vue';
 import { Tag } from 'ant-design-vue';
+import zhCn from 'element-plus/es/locale/lang/zh-cn';
+
 import * as ElementPlusIconsVue from '@element-plus/icons-vue'
 // >>>>>>> Stashed changes
 import { createPinia } from 'pinia';
@@ -25,7 +27,10 @@ for (const [key, component] of Object.entries(ElementPlusIconsVue)) {
 app.config.productionTip = false;
 app.use(router)
 app.use(Antd)
-app.use(ElementPlus)
+app.use(ElementPlus, {
+   locale: zhCn
+ });
+ 
 // <<<<<<< Updated upstream
 // for (const [key, component] of Object.entries(ElementPlusIconsVue)) {
 //   app.component(key, component)
