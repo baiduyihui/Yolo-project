@@ -1,7 +1,7 @@
 import {http} from '@/utils/http'
 
 export const getChannelListAPI=()=>{
-    return http.get('/channel_info')
+    return http.get('/channel_info/')
 }
 
 export const setChannelListAPI=(data)=>{

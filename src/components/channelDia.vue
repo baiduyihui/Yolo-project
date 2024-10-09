@@ -52,7 +52,7 @@
 import { TeamOutlined, CarOutlined } from '@ant-design/icons-vue'
 import { ref, onMounted } from 'vue'
 import { defineProps, defineEmits } from 'vue'
-const ifall = ref(false)
+const ifall = ref(true)
 const tableData = ref([])
 const props = defineProps({
     tableData2: {

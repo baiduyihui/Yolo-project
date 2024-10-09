@@ -9,7 +9,7 @@ export const getChannelInfoAPI=(channel_status,address,channel_name,person_statu
     change_time
     
 )=>{
-    return http.get('/channel_info',{
+    return http.get('/channel_info/',{
         params:{
             channel_status,
             address,

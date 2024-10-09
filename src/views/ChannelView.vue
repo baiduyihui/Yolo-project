@@ -65,6 +65,7 @@ const getChannelList = async () =>{
        res.data.forEach((item) => {
            tableData.push({ ...item ,...item.fields})
        })
+       console.log(tableData)
    } catch (error) {
        console.log(error)
    }
@@ -171,6 +172,7 @@ const changemath = async({data,ifall}) => {
             setChannelmath(data,index.value)
         }
         getChannelList()
+        set(index.value)
         centerDialogVisible.value = false
         ElMessage({
             showClose: true,
