@@ -7,6 +7,7 @@
           :model="state.tableData.param"
           size="default"
           >
+          
             <el-row>
               <el-form-item label="" size="default" prop="channel">
                 <el-select
@@ -156,19 +157,15 @@ const deleteState = async () => {
 const downloadFile = async () => {
   try {
     const response = await searchAlarm.downLoadState(state.tableData.param);
-    // 创建一个 URL 对象
     console.log(response)
     const url = window.URL.createObjectURL(new Blob([response.download_path]));
     console.log(response.
     download_path)
-    // 创建一个链接元素
     const link = document.createElement('a');
     link.href = url;
-    link.setAttribute('download', '文件名'); // 设置下载的文件名
-    // 触发下载
+    link.setAttribute('download', '文件名');                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                
     document.body.appendChild(link);
     link.click();
-    // 清理
     link.parentNode.removeChild(link);
     window.URL.revokeObjectURL(url);
   } catch (error) {
