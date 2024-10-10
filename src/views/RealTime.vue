@@ -17,24 +17,33 @@
         <el-table-column prop="fields" label="详细信息" width="180px">
           <template #default="scope">
             <div class="box">
-              <el-tooltip popper-class="my-tooltip" effect="light" @click="getChannelInfo(scope.row)" placement="top-start"
-                :content="JSON.stringify(scope.row)">
+              <!-- <el-tooltip popper-class="my-tooltip" effect="light" @click="getChannelInfo(scope.row)" placement="top-start"
+                :content="JSON.stringify(scope.row)" class="box-item">
                 <el-icon color="#3590EF">
                   <WarnTriangleFilled />
                 </el-icon>
-              </el-tooltip>
+              </el-tooltip> -->
+              <div>
+                <a-popover placement="topLeft" :width="300">
+                  <el-icon color="#3590EF">
+                    <WarnTriangleFilled />
+                  </el-icon>
+                  <template #content>
+                    <div class="icon_width">
+                      <p >{{ JSON.stringify(scope.row) }}</p>
+                    </div>
+                  </template>
+                </a-popover>
+              </div>
             </div>
           </template>
         </el-table-column>
       </el-table>
     </div>
-    
-    
-
   </div>
   <div class="images-container">
-      <img v-for="(url, index) in picturesSrc" :key="index" :src="url" class="image">
-    </div>
+    <img v-for="(url, index) in picturesSrc" :key="index" :src="url" class="image">
+  </div>
 
 </template>
 
@@ -45,6 +54,7 @@ import { WarnTriangleFilled } from '@element-plus/icons-vue'
 import { getChannelInfoAPI } from '@/api/channelInfo';
 import { getVideoAPI } from '@/api/video';
 import { getPicturesAPI } from '@/api/pictures';
+// const buttonWidth = ref(20);
 const getChannelInfo = async () => {
   const res = await getChannelInfoAPI()
   //  if(res){
@@ -104,6 +114,8 @@ const getVideo = async () => {
   }
 
 }
+
+
 </script>
 
 <style scoped>
@@ -150,11 +162,19 @@ const getVideo = async () => {
 }
 
 .image {
-  max-width: 150px; /* Adjust the size of the images */
+  max-width: 150px;
+  /* Adjust the size of the images */
   height: auto;
-  display: inline-block; /* Allow images to be in a line */
-  margin-right: 10px; /* Space between images */
-  padding:3px;
+  display: inline-block;
+  /* Allow images to be in a line */
+  margin-right: 10px;
+  /* Space between images */
+  padding: 3px;
 }
-
+.icon_width{
+  width: 300px;
+  word-wrap: break-word;
+  overflow-y: auto;
+  
+}
 </style>

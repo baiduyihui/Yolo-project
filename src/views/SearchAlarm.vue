@@ -2,117 +2,6 @@
   <dv-border-box-1>
     <div class="box1">
       <div>
-<<<<<<< Updated upstream
-        <el-form
-          :inline="true"
-          :model="state.tableData.param"
-          size="default"
-          >
-          
-            <el-row>
-              <el-form-item label="" size="default" prop="channel">
-                <el-select
-                  v-model="state.tableData.param.channel"
-                  placeholder="请选择通道"
-                  style="width: 180px"
-                >
-                  <el-option label="通道一" value="1" />
-                  <el-option label="通道二" value="2" />
-                </el-select>
-              </el-form-item>
-              <el-form-item label="" size="default" prop="alarm_type">
-                <el-select
-                  style="width: 180px"
-                  v-model="state.tableData.param.alarm_type"
-                  placeholder="请选择告警类型"
-                  clearable
-                >
-                  <el-option label="人数统计" value="people" />
-                  <el-option label="车辆统计" value="car" />
-                </el-select>
-              </el-form-item>
-              <el-form-item label="" prop="start_time">
-                <el-date-picker
-                v-model="state.tableData.param.start_time"
-                type="datetime"
-                placeholder="请选择开始时间"
-                value-format="YYYY-MM-DD hh:mm:ss"/>
-              </el-form-item>
-              <el-form-item label="" prop="end_time" style="width: 150px;">
-                <el-date-picker
-                  v-model="state.tableData.param.end_time"
-                  type="datetime"
-                  placeholder="请选择结束时间"
-                  value-format="YYYY-MM-DD hh:mm:ss"/>
-              </el-form-item>
-              <el-button size="default" type="primary" @click="getTable">
-                <el-icon ><Search /></el-icon>查询记录
-              </el-button>
-              <el-button size="default" type="danger" @click="deleteState">
-                <el-icon><Delete /></el-icon>删除记录
-              </el-button>
-              <el-button size="default" @click="downloadFile">
-                <el-icon><Upload/></el-icon>导出记录
-              </el-button>
-              </el-row>
-            </el-form>
-          </div>
-          <div class="box">
-            <div >
-              <div class="images">
-                <template v-for="item in state.tableData.records" :key="item">
-                  <div class="content">
-                    <div class="view">
-                      <img :src="item.url" alt="" style="width: 237px;height: 110px;"/>
-                    </div>
-                    <div class="text">
-                      <div class="font1">{{ item.type}}</div>
-                      <div class="font2">{{ (item.time) }}</div>
-                    </div>
-                  </div>
-                </template>
-              </div>
-            </div>
-          </div>
-          <el-pagination
-            @size-change="onHandleSizeChange"
-            @current-change="onHandleCurrentChange"
-            :pager-count="5"
-            :page-sizes="[7,6,5]"
-            v-model:current-page="state.tableData.param.page.current"
-            v-model:page-size="state.tableData.param.page.size"
-            layout="total,  prev, pager, next, jumper"
-            :total="state.tableData.length"
-            style="background-color: transparent;margin-left: 450px;"
-          >
-          </el-pagination>
-      </div>
-    </dv-border-box-1>
-  </template>
-  
-<script setup>
-import {reactive} from "vue";
-import { Search, Delete,Upload } from "@element-plus/icons-vue";
-import {searchAlarmApi} from '../api/search'
-import { ElMessage,ElMessageBox  } from "element-plus";
-
-  const searchAlarm=searchAlarmApi()
-  // 定义变量内容
-  const state = reactive({
-    tableData: {
-      records: [],
-      length: 0,
-      param: {
-        page: {
-        current: 1,
-        size: 10,
-      },
-        channel: "1",
-        alarm_type: "",
-        start_time: "",
-        end_time:"",
-      },
-=======
         <el-form :inline="true" ref="SearchRef" :model="state.tableData.param" size="default">
           <el-row>
             <el-form-item label="" size="default" prop="channel">
@@ -203,7 +92,6 @@ const state = reactive({
       alarm_type: "",
       start_time: "",
       end_time: "",
->>>>>>> Stashed changes
     },
     query: {
       channel: "",
@@ -231,8 +119,6 @@ const getTable = () => {
   console.log(state.tableData.param);
   getTableData()
 }
-<<<<<<< Updated upstream
-=======
 
 const getCurrentPageData = () => {
   const current = state.tableData.current;
@@ -243,7 +129,6 @@ const getCurrentPageData = () => {
 };
 const currentPageData = computed(() => getCurrentPageData());
 
->>>>>>> Stashed changes
 // 删除数据
 const deleteState = async () => {
   try {
@@ -273,12 +158,8 @@ const downloadFile = async () => {
     console.log(response)
     const url = window.URL.createObjectURL(new Blob([response.download_path]));
     console.log(response.
-<<<<<<< Updated upstream
-    download_path)
-=======
       download_path)
     // 创建一个链接元素
->>>>>>> Stashed changes
     const link = document.createElement('a');
     link.href = url;
     link.setAttribute('download', '文件名');                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                
@@ -291,51 +172,6 @@ const downloadFile = async () => {
   }
 };
 
-<<<<<<< Updated upstream
-  // 分页改变
-  const onHandleSizeChange = (val) => {
-    state.tableData.param.page.current = val;
-  };
-  // 分页改变
-  const onHandleCurrentChange = (val) => {
-    state.tableData.param.page.size = val;
-  };
-  </script>
-  
-  <style scoped >
-  .box1 {
-    :deep(.el-card__body) {
-      display: flex;
-      flex-direction: column;
-      flex: 1;
-      overflow: auto;
-      .el-table {
-        flex: 1;
-      }
-    }
-    margin-top: 30px;
-    padding-top: 10px;
-    padding-left: 10px;
-    padding-right: 10px;
-  }
-  ::v-deep .el-button--primary.is-link, .el-button--primary.is-plain, .el-button--primary.is-text {
-      --el-button-text-color: var(--el-color-primary);
-      --el-button-bg-color: var(--el-color-primary-light-9);
-      --el-button-border-color: var(--el-color-primary-light-5);
-      --el-button-hover-text-color: var(--el-color-white);
-      --el-button-hover-bg-color: var(--el-color-primary);
-      --el-button-hover-border-color: var(--el-color-primary);
-      --el-button-active-text-color: var(--el-color-white);
-   
-      margin-left: 12px;
-  }
-  
-  body {
-    font-family: Arial, sans-serif;
-    margin: 0;
-    padding: 20px;
-  }
-=======
 // 分页改变
 const onHandleSizeChange = (val) => {
   state.tableData.param.page = val;
@@ -346,7 +182,6 @@ const onHandleCurrentChange = (val) => {
 };
 
 </script>
->>>>>>> Stashed changes
 
 <style scoped>
 .box1 {

@@ -1,16 +1,6 @@
 const { defineConfig } = require('@vue/cli-service')
 module.exports = defineConfig({
   transpileDependencies: true,
-<<<<<<< Updated upstream
-  devServer:{
-    proxy: {
-      '/api': { 
-         target: 'http://101.132.177.19:9200/',
-         changeOrigin: true,
-         pathRewrite: {
-         '^/api': '' 
-         }
-=======
 //   devServer:{
 //     //配置跨域
 //     proxy: {
@@ -32,7 +22,6 @@ module.exports = defineConfig({
         pathRewrite:{
           '^/api':''
         }
->>>>>>> Stashed changes
       }
     }
   }
