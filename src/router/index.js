@@ -22,19 +22,19 @@ const router = createRouter({
               path:'realtime',
               name:'realtime',
               component:() => import('../views/RealTime.vue'),
-              // meta: { requiresAuth: true } // 需要登录
+              meta: { requiresAuth: true } // 需要登录
             },
             {
               path:'search',
               name:'search',
               component:() => import('../views/SearchAlarm.vue'),
-              // meta: { requiresAuth: true } // 需要登录
+              meta: { requiresAuth: true } // 需要登录
             },
             {
               path: 'channel',
               name: 'channel',
               component: () => import('../views/ChannelView.vue'),
-              // meta: { requiresAuth: true } // 需要登录
+              meta: { requiresAuth: true } // 需要登录
             }]
     },
   ]

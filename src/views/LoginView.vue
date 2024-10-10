@@ -37,10 +37,7 @@ const login = async () => {
   const res = await getLoginAPI(ruleForm.value.username, ruleForm.value.password)
   console.log('登陆返回数据:', res);
   if (res.code == 200) {
-    // localStorage.setItem('session_id', res.session_id);
-    // const session_id=localStorage.getItem('session_id');
-    // console.log('存储后的session_id:', session_id); 
-    // store.dispatch('login', res.session_id);
+    localStorage.setItem('session_id', res.session_id);
     router.push('/home/realtime')
   } else {
     alert(res.msg)
