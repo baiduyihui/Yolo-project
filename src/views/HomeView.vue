@@ -75,6 +75,7 @@ export default defineComponent({
                 await getLooutAPI()
                 router.push('/login')
                 localStorage.removeItem('key')
+                localStorage.removeItem('session_id')
                 store.router = 'realtime'
             } catch (error) {
                 console.log(error)
